@@ -1,0 +1,19 @@
+{% if form %}
+<form class="grid-form">
+	<fieldset>
+		<legend>{{ form.title }}</legend>
+		<div data-row-span="{{ form.rows }}">
+			{% for field in form.fields %}
+		  <div data-field-span="{{ field.size }}">
+	      <label>{{ field.label }}</label>
+	      <input type="{{ field.type }}">
+		  </div>
+		  {% endfor %}
+		  <div data-field-span="1">
+	      <label>Field 2</label>
+	      <input type="text">
+		  </div>
+		</div>
+	</fieldset>
+</form>
+{% endif %}

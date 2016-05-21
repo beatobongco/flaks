@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ title }}</title>
+	{% block css %}
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flaks/flakes/css/all.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flaks/gridforms/gridforms/gridforms.css')}}">
+	{% endblock %}
+</head>
+<body>
+	{% block body %}{% endblock %}
+	{% block js %}
+	<script src="{{ url_for('static', filename='flaks/jquery/dist/jquery.js')}}"></script>
+	<script src="{{ url_for('static', filename='flaks/snapjs/snap.js')}}"></script>
+	<script src="{{ url_for('static', filename='flaks/responsive-elements/responsive-elements.js')}}"></script>
+	<script src="{{ url_for('static', filename='flaks/gridforms/gridforms/gridforms.js')}}"></script>
+	<script src="{{ url_for('static', filename='flaks/flakes/js/base.js')}}"></script>
+	{% endblock %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "flaks",
+  "version": "0.0.1",
+  "description": "UI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beatobongco/flaks.git"
+  },
+  "author": "Beato Bongco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beatobongco/flaks/issues"
+  },
+  "homepage": "https://github.com/beatobongco/flaks#readme",
+  "dependencies": {
+    "flakes": "^1.0.3"
+  }
+}
