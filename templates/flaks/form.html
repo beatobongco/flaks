@@ -1,19 +1,29 @@
 {% if form %}
-<form class="grid-form">
+<form class="grid-form" 
+	{% if form.action %}
+	method="{{ form.action.method }}" action="{{ form.action.url }}"
+	{% endif %}
+>
+	<h1>{{ form.title }}</h1>
+	<br><br>
+	{% for fieldset in form.fieldsets %}
 	<fieldset>
-		<legend>{{ form.title }}</legend>
-		<div data-row-span="{{ form.rows }}">
-			{% for field in form.fields %}
-		  <div data-field-span="{{ field.size }}">
-	      <label>{{ field.label }}</label>
-	      <input type="{{ field.type }}">
-		  </div>
-		  {% endfor %}
-		  <div data-field-span="1">
-	      <label>Field 2</label>
-	      <input type="text">
-		  </div>
-		</div>
+		<legend>{{ fieldset.title }}</legend>
+		{% for row in fieldset.rows %}
+			<div data-row-span="{{ row.size }}">
+				{% for field in row.fields %}
+			  <div data-field-span="{{ field.size }}">
+		      <label>{{ field.label }}</label>
+		      <input name="{{ field.name }}" type="{{ field.type }}">
+			  </div>
+			  {% endfor %}
+			</div>
+		{% endfor %}
 	</fieldset>
+	<br><br>
+	{% endfor %}
+	{% if form.action %}
+		<button type="submit">{{ form.action.button_text }}</button>
+	{% endif %}
 </form>
 {% endif %}
