@@ -49,8 +49,8 @@ def make_form(t):
 	action = lines.pop(-1).split()
 	form["action"] = {
 		"button_text": action[0],
-		"url": action[1],
-		"method": action[2].lower()
+		"url": action[2],
+		"method": action[1].lower()
 	}
 	fieldsets = group_fieldsets(lines)
 
@@ -71,13 +71,18 @@ def make_form(t):
 
 			for field in row:
 				_field = field.split(":")
-				
-				row_dict["fields"].append({
+				field_type = _field[1].strip()
+				field_dict = {
 					"size": 1,
 					"label": _field[0].strip(),
-					"name": _field[0].strip().replace(" ", "_").lower(),
-					"type": _field[1].strip()
-				})
+					"name": _field[0].strip(),
+					"type": field_type 
+				}
+
+				if field_type in ["radio", "checkbox", "select"]:
+					field_dict["choices"] = [x.strip() for x in _field[2].split("|")]
+
+				row_dict["fields"].append(field_dict)
 			
 			fieldset_dict["rows"].append(row_dict)
 
@@ -93,46 +98,31 @@ def hello():
 	## Pick any: checkbox: banana/apple/sausage
 	## Pick one: dropdown: a/b/c/d
 
+	# Make a form easily using a string/file OR from a dict 
 	form = make_form("""My Awesome Form
 		
-		Personal Info
+		Please open account at
 		---
-		First name: text
-		Family name: text		
-		Address: text
+		Branch name: text
 
-		Personal Info2
+		Personal Details (Sole/First Accountholder/Minor)
 		---
-		Wow: text
-		Cool: text
+		Title: radio: Mr. |Mrs.|Ms.
+		Full name: text
 
-		Beans: text
-		Sausage: text
+		Date of birth: date
+		Nationality: select: American|Filipino|Japanese
 
-		Go! https://httpbin.org/post POST""")
+		Account details
+		---
+		Choice of account: checkbox: Savings|Current|Fixed deposits
+		Mode of funding: checkbox: Cash|Check|NEFT
+		One radio: radio: Wow
+		One checkbox: checkbox: Cool
 
-	form2 = {
-		"title": "My form",
-		"fieldsets": [
-			{
-				"title": "Personal Info", 
-				"rows": [
-					{
-						"size": 2, 
-						"fields": [
-							{"size": 1, "name": "cool", "label": "Cool", "type": "text"},
-							{"size": 1, "name": "beans", "label": "Beans", "type": "text"}
-						],
-					},
-				],
-			}
-		],
-		"action": {
-			"button_text": "Go!",
-			"method": "post",
-			"url": "https://httpbin.org/post"
-		}
-	}
+		Go! POST https://httpbin.org/post""")
+
+
 	return render_template("index.html", title="It works!", form=form)
 
 if __name__ == "__main__":

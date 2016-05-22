@@ -12,13 +12,37 @@
 		{% for row in fieldset.rows %}
 			<div data-row-span="{{ row.size }}">
 				{% for field in row.fields %}
-			  <div data-field-span="{{ field.size }}">
-		      <label>{{ field.label }}</label>
-		      <input name="{{ field.name }}" type="{{ field.type }}">
+			  	<div data-field-span="{{ field.size }}">
+		      	<label>{{ field.label }}</label>
+						{% if field.type == "text" %}
+		      		<input name="{{ field.name }}" type="text">
+		      	{% elif field.type == "radio" %}
+		      		{% for choice in field.choices %}
+		      		<label>
+		      			<input type="radio" name="{{ field.name }}" value="{{ choice }}">
+		      			{{choice}}
+		      		</label>
+		      		{% endfor %} <!-- field.choices -->
+		      	{% elif field.type == "date" %}
+		      		<input name="{{ field.name }}" type="date">
+		      	{% elif field.type == "select" %}
+		      		<select>
+		      			{% for choice in field.choices %}
+		      				<option value="{{ choice }}">{{ choice }}</option>
+		      			{% endfor %} <!-- field.choices -->
+		      		</select>
+		      	{% elif field.type == "checkbox" %}
+		      		{% for choice in field.choices %}
+		      		<label>
+		      			<input type="checkbox" name="{{ field.name }}" value="{{ choice }}">
+		      			{{choice}}
+		      		</label>
+		      		{% endfor %} <!-- field.choices -->
+		      	{% endif %} <!-- field.type -->
 			  </div>
-			  {% endfor %}
+			  {% endfor %} <!-- row.fields -->
 			</div>
-		{% endfor %}
+		{% endfor %} <!-- fieldset.rows -->
 	</fieldset>
 	<br><br>
 	{% endfor %}
